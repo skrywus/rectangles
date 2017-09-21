@@ -2,7 +2,7 @@ import React from 'react';
 import {addRectangleRequest, clearStoreRequest} from '../../state/actions';
 import {connect} from 'react-redux';
 import {getRectangleNumber, getRectangleTotalWidth} from '../../state/selectors';
-import {LINE_STYLE, LINE_WIDTH, BG_STYLE} from '../../services/config';
+import {LINE_STYLE, BG_STYLE} from '../../services/config';
 import {drawRectangle} from '../../services/utils';
 
 class AddRectangle extends React.Component {
@@ -39,23 +39,16 @@ class AddRectangle extends React.Component {
         this.setState({showMenu: false});
 
         const c = canvas.refs.canvasForRectangles;
-        const ctx=c.getContext("2d");
-        ctx.beginPath();
-        ctx.lineWidth = LINE_WIDTH;
-        ctx.strokeStyle = LINE_STYLE;
-        ctx.rect(
-            event.target.x.value,
-            event.target.y.value,
-            event.target.width.value,
-            event.target.height.value
-        );
-        ctx.stroke();
-        addRectangleRequest({
-            width: event.target.width.value,
-            height: event.target.height.value,
+        const newRectangleParams = {
             x: event.target.x.value,
-            y: event.target.y.value
-        });
+            y: event.target.y.value,
+            width: event.target.width.value,
+            height: event.target.height.value
+        };
+
+        drawRectangle(c, newRectangleParams);
+        addRectangleRequest(newRectangleParams);
+
         event.preventDefault();
     }
 
@@ -105,25 +98,24 @@ class AddRectangle extends React.Component {
         const {counter} = this.props;
         return (
             <div className="menu">
-                {counter < 5 && <button onClick={() => this.showMenu()}>{this.state.showMenu ? '-' : '+'} New rectangle</button>}
-                {counter >= 5 && <button onClick={() => this.clearCanvas()}>Clear all</button>}
-                <button onClick={() => this.printPage()}>Print!</button>
+                {counter < 5 && <button className="btn btn-primary" onClick={() => this.showMenu()}>{this.state.showMenu ? '⇽' : '⇾'} New rectangle</button>}&nbsp;
+                <button className="btn btn-primary" onClick={() => this.clearCanvas()}>Clear all</button>&nbsp;
+                <button className="btn btn-primary" onClick={() => this.printPage()}>Print!</button>
                 {this.state.showMenu && <div className="menuContent">
                     <form onSubmit={(event) => this.createNewRectangle(event, false)}>
                         <label>
-                            Width:<input name="width" onChange={(event) => this.checkWidthSum(event)} type="number"
-                                         min={1}/>
+                            Width:<input name="width" onChange={(event) => this.checkWidthSum(event)} type="number" min={1} required={true} placeholder={1}/>
                         </label>
                         <label>
-                            Height:<input name="height" type="number" min={1}/>
+                            Height:<input name="height" type="number" min={1} required={true} placeholder={1}/>
                         </label>
                         <label>
-                            PositionX:<input name="x" type="number" min={0}/>
+                            PositionX:<input name="x" type="number" min={0} required={true} placeholder={0} max={window.innerWidth}/>
                         </label>
                         <label>
-                            PositionY:<input name="y" type="number" min={0}/>
+                            PositionY:<input name="y" type="number" min={0} required={true} placeholder={0} max={window.innerHeight}/>
                         </label>
-                        <input type="submit" value="Create"/>
+                        <input className="btn btn-success" type="submit" value="Create"/>
                     </form>
                 </div>}
             </div>

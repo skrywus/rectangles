@@ -1,6 +1,6 @@
 import {LINE_STYLE, LINE_WIDTH} from './config';
 
-export const drawRectangle = (myCanvas, rect, data) => {
+export const drawRectangle = (myCanvas, rect, data = {}) => {
     const ctx = myCanvas.getContext("2d");
     ctx.beginPath();
     ctx.lineWidth = data.width || LINE_WIDTH;
