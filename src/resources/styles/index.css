@@ -1,0 +1,26 @@
+body {
+    background-color: #e1edf7;
+}
+
+.menu {
+    padding-top: 10px;
+}
+.menu .menuContent{
+    display: inline-block;
+}
+
+.menu label {
+    padding: 0 10px 0px 10px;
+    display: inline-block;
+}
+
+.menu label input[type=number] {
+    margin-left: 10px;
+    width: 6rem;
+}
+
+canvas#canvasForRectangles {
+    display: block;
+    background-color: #e1edf7;
+}
+
