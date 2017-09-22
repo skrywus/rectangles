@@ -98,7 +98,8 @@ class AddRectangle extends React.Component {
         const {counter, totalWidth} = this.props;
         return (
             <div className="menu">
-                {counter < 5 && totalWidth < window.innerWidth && <button className="btn btn-primary" onClick={() => this.showMenu()}>{this.state.showMenu ? '⇽' : '⇾'} New rectangle</button>}&nbsp;
+                {counter < 5 && totalWidth < window.innerWidth &&
+                <button className="btn btn-primary" onClick={() => this.showMenu()}>{this.state.showMenu ? '⇽' : '⇾'} New rectangle</button>}&nbsp;
                 <button className="btn btn-primary" onClick={() => this.clearCanvas()}>Clear all</button>&nbsp;
                 <button className="btn btn-primary" onClick={() => this.printPage()}>Print!</button>
                 {this.state.showMenu && <div className="menuContent">
